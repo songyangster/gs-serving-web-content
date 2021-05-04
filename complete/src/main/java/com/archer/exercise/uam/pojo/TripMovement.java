@@ -14,6 +14,11 @@ public class TripMovement {
     private Date departure;
     private int numTrips;
     private float tripDistance;
+
+    public void setTripDuration(Float tripDuration) {
+        this.tripDuration = tripDuration;
+    }
+
     private Float tripDuration;
 
     public TripMovement(String city, String origGeo, String destGeo, String departure, int numTrips, float tripDistance, Float tripDuration) {

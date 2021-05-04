@@ -18,6 +18,7 @@ public class TripCountService {
     public final static String GEO_FILE = "all_geos.csv";
     public final static String TRIP_FILE = "trip_movement.csv";
     private Map<String, Geo> geos;
+    private LinearRegression linearRegression;
 
     public Map<String, Geo> readGeos(String geoFile) {
         if (geoFile == null) {
@@ -38,9 +39,9 @@ public class TripCountService {
         return geos;
     }
 
-    public String sortTrip(String tripMovementFile, Date date) {
+    public String sortTrip(String tripMovementFile, String dateString) {
         StringBuilder output = new StringBuilder();
-        Map<String, Integer> tripCounts = readTripMovements(tripMovementFile, date);
+        Map<String, Integer> tripCounts = readTripMovements(tripMovementFile, dateString);
 
         Map<Integer, List<String>> reverseMap = reverseMap(tripCounts);
         // Now sort
@@ -78,7 +79,7 @@ public class TripCountService {
         return rootNode.toString();
     }
 
-    private Map<String, Integer> readTripMovements(String tripMovementFile, Date date) {
+    private Map<String, Integer> readTripMovements(String tripMovementFile, String dateString) {
         if (tripMovementFile == null) {
             tripMovementFile = TRIP_FILE;
         }
@@ -118,7 +119,41 @@ public class TripCountService {
         return reversedMap;
     }
 
+    public void doLinearRegression (String tripMovementFile) {
+        if (tripMovementFile == null) {
+            tripMovementFile = TRIP_FILE;
+        }
+        if (linearRegression == null) {
+            linearRegression = new LinearRegression();
+        }
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(tripMovementFile), StandardCharsets.UTF_8));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 7 ) {
+                    linearRegression.firstPass(Float.parseFloat(parts[5]), Float.parseFloat(parts[6]));
+                }
+            }
+            br.close();
+
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(tripMovementFile), StandardCharsets.UTF_8));
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 7 ) {
+                    linearRegression.secondPass(Float.parseFloat(parts[5]), Float.parseFloat(parts[6]));
+                }
+            }
+            br.close();
+
+            linearRegression.fit();
+        } catch (IOException e) {
+            System.out.println("Cannot open file " + tripMovementFile + e);
+        }
+    }
+
     public void estimateDuration(TripMovement tripMovement) {
         if (tripMovement.getTripDuration() != null) return;
+        tripMovement.setTripDuration((float) linearRegression.predict(tripMovement.getTripDistance()));
     }
 }
