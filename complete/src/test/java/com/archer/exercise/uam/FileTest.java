@@ -31,9 +31,9 @@ public class FileTest {
             while (geoIds.size() > 0) {
                 String firsId = geoIds.pop();
                 for (String secondId : geoIds) {
-                    float randomFactor = (random() + 100)/ 10;
-                    TripMovement tripMovement = new TripMovement("LA", firsId, secondId, TripMovement.formatDate(addMinutesToJavaUtilDate(baseDate, random() * 15)),
-                            (int)((random() + 100)/10) + 1, (float)(((int) (23.25 * randomFactor * 10)) / 100),  (float)(((int) (1876.4 * randomFactor)) / 10));
+                    float randomFactor = (random() + 100)/ 20;//0-10.
+                    TripMovement tripMovement = new TripMovement("LA", firsId, secondId, TripMovement.formatDate(addMinutesToJavaUtilDate(baseDate, ((int)(random())) * 15)),
+                            (int)((random() + 100)/10) + 1, (float)(((int) (23.52 * randomFactor * 10)) / 50.),  (float)(((int) ((1876.4 - 200.0) * randomFactor)) / 5. + random() + 200.0));// 0-2
                     outputStream.write(tripMovement.toString().getBytes());
                     outputStream.write("\n".getBytes());
                 }
@@ -50,7 +50,7 @@ public class FileTest {
         return calendar.getTime();
     }
 
-    private int random () {
-        return (int) ((Math.random() - 0.5) * 200);
+    private float random () {
+        return (int) ((Math.random() - 0.5) * 200);//-100 ~ 100
     }
 }
