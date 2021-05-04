@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -19,6 +20,7 @@ public class TripCountService {
     public final static String TRIP_FILE = "trip_movement.csv";
     private Map<String, Geo> geos;
     private LinearRegression linearRegression;
+    private static SimpleDateFormat dateOnlyFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public Map<String, Geo> readGeos(String geoFile) {
         if (geoFile == null) {
@@ -55,7 +57,7 @@ public class TripCountService {
         return output.toString();
     }
     public String jsonHeatMap(String tripMovementFile, String geoFile, String dateString) {
-        Map<String, Integer> tripCounts = readTripMovements(null, null);
+        Map<String, Integer> tripCounts = readTripMovements(null, dateString);
         if (geos == null) {
             this.readGeos(geoFile);
         }
@@ -90,15 +92,31 @@ public class TripCountService {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
                 TripMovement tripMovement = new TripMovement(parts[0], parts[1], parts[2], parts[3], Integer.parseInt(parts[4]), Float.parseFloat(parts[5]), parts.length < 7 ? null : Float.parseFloat(parts[6]));
-
-                addToTRipCount(tripCounts, tripMovement, tripMovement.getOrigGeo());
-                addToTRipCount(tripCounts, tripMovement, tripMovement.getDestGeo());
+                if (isOnDate(dateString, tripMovement)) {
+                    addToTRipCount(tripCounts, tripMovement, tripMovement.getOrigGeo());
+                    addToTRipCount(tripCounts, tripMovement, tripMovement.getDestGeo());
+                }
             }
             br.close();
         } catch (IOException e) {
             System.out.println("Cannot open file " + tripMovementFile + e);
         }
         return tripCounts;
+    }
+
+    private boolean isOnDate(String dateString,TripMovement tripMovement) {
+        if (dateString == null) return true;
+        boolean isOnData = false;
+        try {
+            Date date = dateOnlyFormat.parse(dateString);
+            //Normalize and compare
+            if (dateOnlyFormat.format(date).equals(dateOnlyFormat.format(tripMovement.getDeparture()))) {
+                isOnData = true;
+            }
+        } catch (Exception e) {
+            System.out.println("Incorrect data format " + dateString);
+        }
+        return isOnData;
     }
 
     private void addToTRipCount(Map<String, Integer> tripCounts, TripMovement tripMovement, String geoId) {

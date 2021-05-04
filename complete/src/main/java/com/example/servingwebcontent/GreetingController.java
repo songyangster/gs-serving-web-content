@@ -20,8 +20,8 @@ public class GreetingController {
 	}
 
 	@GetMapping("/geo")
-	public String geo(@RequestParam(name="name", required=false, defaultValue="sort") String name, Model model) {
-		model.addAttribute("test", name.equals("sort") ? tripCountService.sortTrip(null, null) : tripCountService.jsonHeatMap(null, null, null));
+	public String geo(@RequestParam(name="name", required=false, defaultValue="sort") String name, @RequestParam(name="date", required=false) String date, Model model) {
+		model.addAttribute("test", name.equals("sort") ? tripCountService.sortTrip(null, date) : tripCountService.jsonHeatMap(null, null, date));
 		return "geo";
 	}
 
