@@ -1,8 +1,5 @@
 package com.leetcode.exercise;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AddTwoNumbers {
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
@@ -32,43 +29,6 @@ public class AddTwoNumbers {
         node = null;
 
         return result;
-    }
-
-    public static long sumdNodes(ListNode node) {
-        long sum = 0;
-        long base = 1;
-        while (node != null) {
-            sum += node.val * base;
-            node = node.next;
-            base *= 10;
-        }
-        return sum;
-    }
-
-    public static ListNode convertToListNode(int[] list) {
-        ListNode node = null;
-        for (int i = list.length - 1; i >= 0; i--) {
-            node = new ListNode(list[i], node == null ? null : node);
-        }
-        return node;
-    }
-
-    public static class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode() {
-        }
-
-        ListNode(int val) {
-            this.val = val;
-        }
-
-        ListNode(int val, ListNode next) {
-            this.val = val;
-            this.next = next;
-        }
-
     }
 
 }

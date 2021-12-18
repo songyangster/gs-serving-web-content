@@ -15,9 +15,9 @@ public class TestAddTwoNumbers {
     }
 
     private void compareAdds(AddTwoNumbers addTwoNumbers, int[] l1, int[] l2, int[] expected) {
-        AddTwoNumbers.ListNode l11 = AddTwoNumbers.convertToListNode(l1);
-        AddTwoNumbers.ListNode l12 = AddTwoNumbers.convertToListNode(l2);
-        AddTwoNumbers.ListNode sum = addTwoNumbers.addTwoNumbers(l11, l12);
+        ListNode l11 = ListNode.convertToListNode(l1);
+        ListNode l12 = ListNode.convertToListNode(l2);
+        ListNode sum = addTwoNumbers.addTwoNumbers(l11, l12);
 
         long sumExpected = 0;
         long base = 1;
@@ -25,6 +25,6 @@ public class TestAddTwoNumbers {
             sumExpected += entry * base;
             base *= 10;
         }
-        assertEquals(AddTwoNumbers.sumdNodes(sum), sumExpected);
+        assertEquals(ListNode.sumdNodes(sum), sumExpected);
     }
 }
