@@ -1,5 +1,7 @@
 package com.leetcode.exercise;
 
+import com.leetcode.exercise.datastructure.TreeNode;
+
 import java.util.*;
 
 public class BSTSearch {

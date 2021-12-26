@@ -1,6 +1,6 @@
 package com.leetcode.exercise;
 
-import java.util.Arrays;
+import com.leetcode.exercise.datastructure.ListNode;
 
 public class AstroCollide {
     public int[] asteroidCollision(int[] asteroids) {

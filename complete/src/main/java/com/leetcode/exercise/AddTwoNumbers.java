@@ -1,5 +1,7 @@
 package com.leetcode.exercise;
 
+import com.leetcode.exercise.datastructure.ListNode;
+
 public class AddTwoNumbers {
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
