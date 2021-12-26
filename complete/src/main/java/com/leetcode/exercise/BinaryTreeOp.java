@@ -35,4 +35,26 @@ public class BinaryTreeOp {
             }
         }
     }
+
+    private TreeNode newRoot;
+    public TreeNode upsideDownBinaryTree(TreeNode root) {
+        if (root == null) return null;
+        invertOne(root);
+        return newRoot;
+    }
+
+    private void invertOne(TreeNode node) {
+        TreeNode left = node.left;
+        TreeNode right = node.right;
+        if (left == null) {
+            newRoot = node;
+            return;
+        }
+        invertOne(left);
+        left.left = right;
+        left.right = node;
+        node.left = null;
+        node.right = null;
+    }
+
 }
