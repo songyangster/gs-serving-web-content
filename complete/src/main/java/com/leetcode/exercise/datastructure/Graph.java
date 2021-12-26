@@ -1,4 +1,6 @@
-package com.leetcode.exercise;
+package com.leetcode.exercise.datastructure;
+
+import com.leetcode.exercise.datastructure.Vertex;
 
 import java.util.*;
 
@@ -13,26 +15,21 @@ public class Graph {
         return adjVertices;
     }
 
-    void addVertex(String label) {
-        adjVertices.putIfAbsent(new Vertex(label), new ArrayList<>());
+    public void addVertex(Vertex vertex) {
+        adjVertices.putIfAbsent(vertex, new ArrayList<>());
     }
 
-    void removeVertex(String label) {
-        Vertex v = new Vertex(label);
+    public void removeVertex(Vertex v) {
         adjVertices.values().stream().forEach(e -> e.remove(v));
-        adjVertices.remove(new Vertex(label));
+        adjVertices.remove(v);
     }
 
-    void addEdge(String label1, String label2) {
-        Vertex v1 = new Vertex(label1);
-        Vertex v2 = new Vertex(label2);
+    public void addEdge(Vertex v1, Vertex v2) {
         adjVertices.get(v1).add(v2);
         adjVertices.get(v2).add(v1);
     }
 
-    void removeEdge(String label1, String label2) {
-        Vertex v1 = new Vertex(label1);
-        Vertex v2 = new Vertex(label2);
+    public void removeEdge(Vertex v1, Vertex v2) {
         List<Vertex> eV1 = adjVertices.get(v1);
         List<Vertex> eV2 = adjVertices.get(v2);
         if (eV1 != null)
@@ -41,11 +38,11 @@ public class Graph {
             eV2.remove(v1);
     }
 
-    List<Vertex> getAdjVertices(Vertex v) {
+    public List<Vertex> getAdjVertices(Vertex v) {
         return adjVertices.get(v);
     }
 
-    Set<Vertex> depthFirstTraversal(Vertex root) {
+    public Set<Vertex> depthFirstTraversal(Vertex root) {
         Set<Vertex> visited = new LinkedHashSet<Vertex>();
         Stack<Vertex> stack = new Stack<Vertex>();
         stack.push(root);
@@ -61,7 +58,7 @@ public class Graph {
         return visited;
     }
 
-    Set<Vertex> breadthFirstTraversal(Vertex root) {
+    public Set<Vertex> breadthFirstTraversal(Vertex root) {
         Set<Vertex> visited = new LinkedHashSet<Vertex>();
         Queue<Vertex> queue = new LinkedList<Vertex>();
         queue.add(root);
@@ -78,28 +75,4 @@ public class Graph {
         return visited;
     }
 
-    public static class Vertex {
-        String label;
-        Vertex(String label) {
-            this.label = label;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Vertex vertex = (Vertex) o;
-            return Objects.equals(label, vertex.label);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(label);
-        }
-
-        @Override
-        public String toString() {
-            return label;
-        }
-    }
 }

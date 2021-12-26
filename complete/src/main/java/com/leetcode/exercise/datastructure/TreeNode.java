@@ -1,8 +1,5 @@
-package com.leetcode.exercise;
+package com.leetcode.exercise.datastructure;
 
-/**
- * Definition for a binary tree node.
- */
 public class TreeNode {
     int val;
     TreeNode left;
@@ -13,10 +10,5 @@ public class TreeNode {
         this.val = val;
         this.left = left;
         this.right = right;
-    }
-
-    @Override
-    public String toString() {
-        return "" + val;
     }
 }

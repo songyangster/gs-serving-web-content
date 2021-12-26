@@ -1,10 +1,12 @@
 package com.leetcode.exercise;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RegexMatchingTest {
+    @Disabled
     @Test
     public void testRegexMatching() {
         RegexMatching regexMatching = new RegexMatching();

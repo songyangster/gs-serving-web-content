@@ -4,6 +4,26 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 public class JSONConverter {
+    public static int[] convertJSONtoIntArray(String jsonString) throws JSONException {
+        JSONArray jsonArray = new JSONArray(jsonString);
+        System.out.println(jsonArray);
+        int[] array = new int[jsonArray.length()];
+        for (int i = 0; i < jsonArray.length(); i++) {
+             array[i] = (Integer) jsonArray.get(i);
+        }
+        return array;
+    }
+
+    public static String[] convertJSONtoStringArray(String jsonString) throws JSONException {
+        JSONArray jsonArray = new JSONArray(jsonString);
+        System.out.println(jsonArray);
+        String[] array = new String[jsonArray.length()];
+        for (int i = 0; i < jsonArray.length(); i++) {
+            array[i] = (String) jsonArray.get(i);
+        }
+        return array;
+    }
+
     public static int[][] convertJSONtoInt2DArray(String jsonString) throws JSONException {
         JSONArray jsonArray = new JSONArray(jsonString);
 //        System.out.println(jsonArray);
