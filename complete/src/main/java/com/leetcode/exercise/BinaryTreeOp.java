@@ -74,4 +74,19 @@ public class BinaryTreeOp {
         traverseTree(node.left);
         traverseTree(node.right);
     }
+
+    int maxDepth;
+    public int maxDepth(TreeNode root) {
+        maxDepth = 0;
+        traverseDepth(root, 0);
+        return maxDepth;
+    }
+
+    private void traverseDepth(TreeNode node, int depth) {
+        if (node == null) return;
+        depth++;
+        if (depth > maxDepth) maxDepth = depth;
+        traverseDepth(node.left, depth);
+        traverseDepth(node.right, depth);
+    }
 }
