@@ -107,4 +107,46 @@ public class BSTSearch {
         }
     }
 
+    int count = 0;
+    int current = 0;
+    public int kthSmallest(TreeNode root, int k) {
+        count = 0;
+        inOrdrK(root, k);
+        return current;
+    }
+
+    private void inOrdrK(TreeNode node, int k) {
+        if (node == null || count == k) return;
+        inOrdrK(node.left, k);
+        if (count == k) return;
+        count++;
+        current = node.val;
+        if (count == k) return;
+        inOrdrK(node.right, k);
+    }
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        List<TreeNode> pList = new LinkedList<>();
+        List<TreeNode> qList = new LinkedList<>();
+        findNode(root, p, pList);
+        findNode(root, q, qList);
+        TreeNode current = root;
+        for (int i = 0; i < Math.min(pList.size(), qList.size()); i++) {
+            current = pList.get(i);
+            if (i == pList.size() -1 || i == qList.size() - 1 || pList.get(i + 1).val != qList.get(i + 1).val) {
+                break;
+            }
+        }
+        return current;
+    }
+
+    private void findNode(TreeNode treeNode, TreeNode targetNode, List<TreeNode> nList) {
+        nList.add(treeNode);
+        if (targetNode.val == treeNode.val) return;
+        if (targetNode.val < treeNode.val) {
+            findNode(treeNode.left, targetNode, nList);
+        } else {
+            findNode(treeNode.right, targetNode, nList);
+        }
+    }
 }

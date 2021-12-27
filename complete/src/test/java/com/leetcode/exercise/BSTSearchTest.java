@@ -36,5 +36,7 @@ public class BSTSearchTest {
 
         assertEquals("[3, 4]", bstSearch.closestKValues(root, 3.714268, 2).toString());
 
+        assertEquals(4, bstSearch.kthSmallest(root, 4));
+        assertEquals(1, bstSearch.kthSmallest(root, 1));
     }
 }

@@ -4,6 +4,7 @@ import com.leetcode.exercise.datastructure.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class BinaryTreeOp {
     public List<List<Integer>> findLeaves(TreeNode root) {
@@ -57,4 +58,20 @@ public class BinaryTreeOp {
         node.right = null;
     }
 
+    PriorityQueue<Integer> queue = new PriorityQueue<>((a, b) -> b - a);
+    public int findSecondMinimumValue(TreeNode root) {
+        queue.clear();
+        traverseTree(root);
+        return queue.size() == 2 ? queue.poll() : -1;
+    }
+
+    private void traverseTree(TreeNode node) {
+        if (node == null) return;
+        if(!queue.contains(node.val)) queue.add(node.val);
+        if (queue.size() == 3) {
+            queue.poll();
+        }
+        traverseTree(node.left);
+        traverseTree(node.right);
+    }
 }
