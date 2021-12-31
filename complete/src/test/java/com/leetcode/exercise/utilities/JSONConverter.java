@@ -1,4 +1,4 @@
-package com.leetcode.exercise;
+package com.leetcode.exercise.utilities;
 
 import org.json.JSONArray;
 import org.json.JSONException;

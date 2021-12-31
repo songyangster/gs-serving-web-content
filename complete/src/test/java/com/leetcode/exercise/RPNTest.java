@@ -1,5 +1,6 @@
 package com.leetcode.exercise;
 
+import com.leetcode.exercise.utilities.JSONConverter;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
