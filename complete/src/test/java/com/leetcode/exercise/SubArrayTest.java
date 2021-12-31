@@ -34,4 +34,12 @@ public class SubArrayTest {
         assertEquals(1, subArray.maxSubArrayRecursion(JSONConverter.convertJSONtoIntArray("[1]")));
         assertEquals(1, subArray.maxSubArrayRecursion(JSONConverter.convertJSONtoIntArray("[-2, 1]")));
     }
+
+    @Test
+    public void testMaxProduct() {
+        assertEquals(6, subArray.maxProduct(JSONConverter.convertJSONtoIntArray("[2,3,-2,4]")));
+        assertEquals(12, subArray.maxProduct(JSONConverter.convertJSONtoIntArray("[-4,-3]")));
+        assertEquals(1, subArray.maxProduct(JSONConverter.convertJSONtoIntArray("[-1,-1]")));
+        assertEquals(24, subArray.maxProduct(JSONConverter.convertJSONtoIntArray("[-2,3,-4]")));
+    }
 }

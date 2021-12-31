@@ -2,9 +2,7 @@ package com.leetcode.exercise;
 
 import com.leetcode.exercise.datastructure.TreeNode;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class BinaryTreeOp {
     public List<List<Integer>> findLeaves(TreeNode root) {
@@ -88,5 +86,55 @@ public class BinaryTreeOp {
         if (depth > maxDepth) maxDepth = depth;
         traverseDepth(node.left, depth);
         traverseDepth(node.right, depth);
+    }
+
+    List<List<Integer>> levelList;
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        levelList = new ArrayList<>();
+        if (root != null) {
+            traverseLevel(root, 0);
+        }
+        return levelList;
+    }
+
+    private void traverseLevel(TreeNode node, int depth) {
+        while (levelList.size() < depth + 1) {
+            levelList.add(new ArrayList<>());
+        }
+        levelList.get(depth).add(node.val);
+        if (node.left != null) traverseLevel(node.left, depth + 1);
+        if (node.right != null) traverseLevel(node.right, depth + 1);
+    }
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) return null;
+        if (p == null || q == null) return root;
+        LinkedList<TreeNode> pStack = new LinkedList<TreeNode>();
+        LinkedList<TreeNode> qStack = new LinkedList<TreeNode>();
+        if (findNode(root, p, pStack) && findNode(root, q, qStack)) {
+            for (int i = 0; i < Math.min(pStack.size(), qStack.size()); i++) {
+                if (pStack.get(i).val != qStack.get(i).val) return pStack.get(i - 1);
+            }
+        }
+        return root;
+    }
+
+    private boolean findNode(TreeNode node, TreeNode target, LinkedList<TreeNode> stack) {
+        if (target.val == node.val) return true;
+        stack.add(node);
+        if (goDown(node.left, target, stack)) return true;
+        if (goDown(node.right, target, stack)) return true;
+        return false;
+    }
+
+    private boolean goDown(TreeNode node, TreeNode target, LinkedList<TreeNode> stack) {
+        if (node != null) {
+            if (findNode(node.left, target, stack)) {
+                return true;
+            } else {
+                stack.removeLast();
+            }
+        }
+        return false;
     }
 }

@@ -82,4 +82,50 @@ public class SubArray {
         System.out.println(Arrays.asList(array));
         return maxSum;
     }
+
+    public int maxProduct(int[] nums) {
+        return findMaxProduct(nums, 0, nums.length - 1);
+    }
+
+    private int findMaxProduct(int[] a, int i, int j) {
+        if (i > j) return Integer.MIN_VALUE;
+        if (i == j) return a[i];
+        int mid = (int) (i + j)/2;
+        int maxLeft = findMaxProduct(a, i, mid);
+        int maxRight = findMaxProduct(a, mid + 1, j);
+
+        int maxLeftFromMidPos = 0;
+        int maxLeftFromMidPNeg = 0;
+        int runningProduct = 1;
+        for (int p = mid; p >= i; p--) {
+            runningProduct *= a[p];
+            if (runningProduct > 0 && runningProduct > maxLeftFromMidPos) {
+                maxLeftFromMidPos = runningProduct;
+            } else if (runningProduct < 0 && runningProduct < maxLeftFromMidPNeg) {
+                maxLeftFromMidPNeg = runningProduct;
+            }
+        }
+
+        int maxRightFromMidPos = 0;
+        int maxRightFromMidNeg = 0;
+        runningProduct = 1;
+        for (int p = mid + 1; p <= j; p++) {
+            runningProduct *= a[p];
+            if (runningProduct > 0 && runningProduct > maxRightFromMidPos) {
+                maxRightFromMidPos = runningProduct;
+            } else if (runningProduct < 0 && runningProduct < maxRightFromMidNeg) {
+                maxRightFromMidNeg = runningProduct;
+            }
+        }
+
+        int maxBoth = Math.max(maxLeftFromMidPos, maxRightFromMidPos);
+        if (maxLeftFromMidPos * maxRightFromMidPos > maxBoth) {
+            maxBoth = maxLeftFromMidPos * maxRightFromMidPos;
+        }
+        if (maxLeftFromMidPNeg * maxRightFromMidNeg > maxBoth) {
+            maxBoth = maxLeftFromMidPNeg * maxRightFromMidNeg;
+        }
+
+        return Math.max(Math.max(maxLeft, maxRight), maxBoth);
+    }
 }
