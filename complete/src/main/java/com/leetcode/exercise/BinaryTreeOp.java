@@ -59,18 +59,18 @@ public class BinaryTreeOp {
     PriorityQueue<Integer> queue = new PriorityQueue<>((a, b) -> b - a);
     public int findSecondMinimumValue(TreeNode root) {
         queue.clear();
-        traverseTree(root);
+        traverseBFTFixedQueue(root, 2);
         return queue.size() == 2 ? queue.poll() : -1;
     }
 
-    private void traverseTree(TreeNode node) {
+    private void traverseBFTFixedQueue(TreeNode node, int queueSize) {
         if (node == null) return;
         if(!queue.contains(node.val)) queue.add(node.val);
-        if (queue.size() == 3) {
+        if (queue.size() == queueSize + 1) {
             queue.poll();
         }
-        traverseTree(node.left);
-        traverseTree(node.right);
+        traverseBFTFixedQueue(node.left, queueSize);
+        traverseBFTFixedQueue(node.right, queueSize);
     }
 
     int maxDepth;
@@ -120,8 +120,8 @@ public class BinaryTreeOp {
     }
 
     private boolean findNode(TreeNode node, TreeNode target, LinkedList<TreeNode> stack) {
-        if (target.val == node.val) return true;
         stack.add(node);
+        if (target.val == node.val) return true;
         if (goDown(node.left, target, stack)) return true;
         if (goDown(node.right, target, stack)) return true;
         return false;
@@ -129,7 +129,7 @@ public class BinaryTreeOp {
 
     private boolean goDown(TreeNode node, TreeNode target, LinkedList<TreeNode> stack) {
         if (node != null) {
-            if (findNode(node.left, target, stack)) {
+            if (findNode(node, target, stack)) {
                 return true;
             } else {
                 stack.removeLast();

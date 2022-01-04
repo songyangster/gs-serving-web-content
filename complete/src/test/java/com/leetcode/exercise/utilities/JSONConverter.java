@@ -1,18 +1,17 @@
 package com.leetcode.exercise.utilities;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 public class JSONConverter {
     public static int[] convertJSONtoIntArray(String jsonString) {
         try {
-        JSONArray jsonArray = new JSONArray(jsonString);
-        System.out.println(jsonArray);
-        int[] array = new int[jsonArray.length()];
-        for (int i = 0; i < jsonArray.length(); i++) {
-             array[i] = (Integer) jsonArray.get(i);
-        }
-        return array;
+            JSONArray jsonArray = new JSONArray(jsonString);
+            System.out.println(jsonArray);
+            int[] array = new int[jsonArray.length()];
+            for (int i = 0; i < jsonArray.length(); i++) {
+                array[i] = (Integer) jsonArray.get(i);
+            }
+            return array;
         } catch (Exception e) {
             System.out.println("Invalid Json String:" + jsonString);
         }
@@ -21,13 +20,13 @@ public class JSONConverter {
 
     public static String[] convertJSONtoStringArray(String jsonString) {
         try {
-        JSONArray jsonArray = new JSONArray(jsonString);
-        System.out.println(jsonArray);
-        String[] array = new String[jsonArray.length()];
-        for (int i = 0; i < jsonArray.length(); i++) {
-            array[i] = (String) jsonArray.get(i);
-        }
-        return array;
+            JSONArray jsonArray = new JSONArray(jsonString);
+            System.out.println(jsonArray);
+            String[] array = new String[jsonArray.length()];
+            for (int i = 0; i < jsonArray.length(); i++) {
+                array[i] = (String) jsonArray.get(i);
+            }
+            return array;
         } catch (Exception e) {
             System.out.println("Invalid Json String:" + jsonString);
         }
@@ -56,18 +55,18 @@ public class JSONConverter {
 
     public static char[][] convertJSONtoChar2DArray(String jsonString) {
         try {
-        JSONArray jsonArray = new JSONArray(jsonString);
+            JSONArray jsonArray = new JSONArray(jsonString);
 //        System.out.println(jsonArray);
-        char[][] arrayOfArrays = new char[jsonArray.length()][];
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONArray innerJsonArray = (JSONArray) jsonArray.get(i);
-            char[] stringArray = new char[innerJsonArray.length()];
-            for (int j = 0; j < innerJsonArray.length(); j++) {
-                stringArray[j] = ((String) innerJsonArray.get(j)).charAt(0);
+            char[][] arrayOfArrays = new char[jsonArray.length()][];
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONArray innerJsonArray = (JSONArray) jsonArray.get(i);
+                char[] stringArray = new char[innerJsonArray.length()];
+                for (int j = 0; j < innerJsonArray.length(); j++) {
+                    stringArray[j] = ((String) innerJsonArray.get(j)).charAt(0);
+                }
+                arrayOfArrays[i] = stringArray;
             }
-            arrayOfArrays[i] = stringArray;
-        }
-        return arrayOfArrays;
+            return arrayOfArrays;
         } catch (Exception e) {
             System.out.println("Invalid Json String:" + jsonString);
         }

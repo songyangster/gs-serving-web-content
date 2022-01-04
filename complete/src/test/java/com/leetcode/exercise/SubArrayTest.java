@@ -43,4 +43,14 @@ public class SubArrayTest {
         assertEquals(1, subArray.maxProduct(JSONConverter.convertJSONtoIntArray("[-1,-1]")));
         assertEquals(24, subArray.maxProduct(JSONConverter.convertJSONtoIntArray("[-2,3,-4]")));
     }
+
+    @Test
+    public void testNumSubarray() {
+        assertEquals(8, subArray.numSubarrayProductLessThanK(JSONConverter.convertJSONtoIntArray("[10,5,2,6]"), 100));
+    }
+
+    @Test
+    public void testFindREpeat() {
+        assertEquals("[AAAAAAAAAA]", subArray.findRepeatedDnaSequences("AAAAAAAAAAA").toString());
+    }
 }

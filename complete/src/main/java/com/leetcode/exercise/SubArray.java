@@ -128,4 +128,59 @@ public class SubArray {
 
         return Math.max(Math.max(maxLeft, maxRight), maxBoth);
     }
+
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int prod = 1;
+            int index = i;
+            while (index < nums.length && prod * nums[index] < k) {
+                count++;
+                prod *= nums[index];
+                index++;
+            }
+        }
+        return count;
+    }
+
+    public List<String> findRepeatedDnaSequences(String s) {
+        Set<String> seen = new HashSet<>();
+        Set<String> dup = new HashSet<>();
+        for (int i = 0; i < s.length() - 10 + 1; i++) {
+            String sub = s.substring(i, i + 10);
+            if (seen.contains(sub)) {
+                dup.add(sub);
+            } else {
+                seen.add(sub);
+            }
+        }
+
+        return seen.isEmpty() ? null : new ArrayList<>(dup);
+    }
+
+    public String reverseWords(String s) {
+        if (s == null || s.isEmpty()) return "";
+        Stack<String> stack = new Stack<String>();
+        int i = 0;
+        StringBuffer b = new StringBuffer();
+        while (i < s.length()) {
+            char c = s.charAt(i);
+            if (c == ' ' || i == s.length() -1) {
+                if (b.length() > 0) {
+                    stack.push(b.toString());
+                    b = new StringBuffer();
+                }
+            } else {
+                b.append(c);
+            }
+            i++;
+        }
+
+        StringBuffer out = new StringBuffer();
+        while(!stack.isEmpty()) {
+            out.append(stack.pop()).append(" ");
+        }
+        out.deleteCharAt(b.length() -1);
+        return out.toString();
+    }
 }

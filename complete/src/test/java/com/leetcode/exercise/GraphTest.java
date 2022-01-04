@@ -2,11 +2,12 @@ package com.leetcode.exercise;
 
 import com.leetcode.exercise.datastructure.Graph;
 import com.leetcode.exercise.datastructure.Vertex;
+import com.leetcode.exercise.utilities.JSONConverter;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedHashSet;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GraphTest {
     Vertex bob = new Vertex("Bob");
@@ -41,4 +42,20 @@ public class GraphTest {
         return graph;
     }
 
+    GraphOp graphOp = new GraphOp();
+
+    @Test
+    public void testIsTree () {
+        assertTrue(graphOp.validTree(5, JSONConverter.convertJSONtoInt2DArray("[[0,1],[0,2],[0,3],[1,4]]")));
+        assertFalse(graphOp.validTree(5, JSONConverter.convertJSONtoInt2DArray("[[0,1],[1,2],[2,3],[1,3],[1,4]]")));
+        assertFalse(graphOp.validTree(4, JSONConverter.convertJSONtoInt2DArray("[[0,1],[2,3]]")));
+        assertTrue(graphOp.validTree(4, JSONConverter.convertJSONtoInt2DArray("[[0,1],[1,2],[2,3]]")));
+        assertTrue(graphOp.validTree(4, JSONConverter.convertJSONtoInt2DArray("[[0,1],[2,3],[1,2]]")));
+        assertTrue(graphOp.validTree(1, JSONConverter.convertJSONtoInt2DArray("[]")));
+    }
+
+    @Test
+    public void testCountComponents() {
+        assertEquals(2, graphOp.countComponents(4, JSONConverter.convertJSONtoInt2DArray("[[2,3],[1,2],[1,3]]")));
+    }
 }

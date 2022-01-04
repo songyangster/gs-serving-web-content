@@ -133,4 +133,34 @@ public class WordDistance {
             return Objects.hash(words);
         }
     }
+
+    public boolean isAlienSorted(String[] words, String order) {
+        if (words == null || words.length <= 1) return true;
+        Map<Character, Integer> dict = new HashMap<>();
+        for (int i = 0; i < order.length() ; i++) {
+            dict.put(order.charAt(i), order.length() - i);
+        }
+
+        for (int j = 1; j < words.length; j++) {
+            if (compareWords(words[j - 1], words[j], dict) < 0) return false;
+        }
+        return true;
+    }
+
+    private int compareWords(String a, String b, Map<Character, Integer> dict) {
+        if (a == null && b == null) return 0;
+        if (b == null) return 1;
+        if (a == null) return -1;
+        int index = 0;
+        while (index < a.length() || index < b.length()) {
+            if (index > a.length() -1 || index < b.length() && dict.get(a.charAt(index)) > dict.get(b.charAt(index))) {
+                return 1;
+            } else if (index > b.length() -1 || index < a.length() && dict.get(a.charAt(index)) < dict.get(b.charAt(index))) {
+                return -1;
+            } else {
+                index++;
+            }
+        }
+        return 0;
+    }
 }
