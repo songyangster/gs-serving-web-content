@@ -78,4 +78,65 @@ public class GraphOp {
         }
     }
 
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        Graph graph = new Graph();
+        Vertex<String> bv = new Vertex<>(beginWord);
+        graph.addVertex(bv);
+        Vertex<String> ev = null;
+        for (String s : wordList) {
+            Vertex<String> vertex = new Vertex(s);
+            graph.addVertex(vertex);
+            if (s.equals(endWord)) {
+                ev = vertex;
+            }
+        }
+        if (ev == null) return 0;
+
+        List<Vertex> vertices = new ArrayList<>(graph.getAdjVertices().keySet());
+        for (int i = 0; i < vertices.size(); i++) {
+            for (int j = i + 1; j < vertices.size(); j++) {
+                Vertex v1 = vertices.get(i);
+                Vertex v2 = vertices.get(j);
+                if (isEdge(v1, v2)) {
+                    graph.addEdge(v1, v2);
+                }
+            }
+        }
+
+        return breadthFirstTraversal(graph, bv, ev);
+    }
+
+    private int breadthFirstTraversal(Graph g, Vertex begin, Vertex end) {
+        Set<Vertex> visited = new LinkedHashSet<Vertex>();
+        Queue<Vertex> queue = new LinkedList<Vertex>();
+        queue.add(begin);
+        visited.add(begin);
+        int n = 0;
+        while (!queue.isEmpty()) {
+            n++;
+            int level_size = queue.size();
+            while (level_size-- > 0) {
+                Vertex vertex = queue.poll();
+                for (Vertex v : g.getAdjVertices(vertex)) {
+                    if (!visited.contains(v)) {
+                        visited.add(v);
+                        queue.add(v);
+                        if (v.equals(end)) return n + 1;
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+    private boolean isEdge(Vertex<String> v1, Vertex<String> v2) {
+        String s1 = v1.getValue();
+        String s2 = v2.getValue();
+        int c = 0;
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1.charAt(i) != s2.charAt(i)) c++;
+            if (c > 1) return false;
+        }
+        return c == 1;
+    }
 }

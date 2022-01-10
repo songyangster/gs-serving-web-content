@@ -88,4 +88,61 @@ public class Palindrome {
             return "(" + (center - radius) + "," + (dupChar + center + radius) + ")";
         }
     }
+
+    public int longestPalindromeSubseq(String s) {
+        if (s == null || s.isEmpty()) return 0;
+        int val = 1;
+        LinkedList<Character> list = new LinkedList<>();
+        for (int i = 0; i < s.length(); i++) {
+            list.add(s.charAt(i));
+        }
+        return findPair(list);
+    }
+
+    int findPair(LinkedList<Character> list) {
+        if (list.size() <= 1) return list.size();
+        Stack<Character> left = new Stack<>();
+        Stack<Character> right = new Stack<>();
+        boolean touched = true;
+        boolean found = false;
+        while (touched && !list.isEmpty()) {
+            touched = false;
+            Character cl = list.peekFirst();
+            if (!left.contains(cl)) {
+                cl = list.removeFirst();
+                if (right.contains(cl)) {
+                    Character rs = right.pop();
+                    while (rs != null && rs != cl) {
+                        list.addLast(rs);
+                        rs = right.isEmpty() ? null : right.pop();
+                    }
+                    found = true;
+                    break;
+                } else {
+                    left.push(cl);
+                }
+                touched = true;
+            }
+
+            if (list.size() == 0) return 0;
+            Character cr = list.peekLast();
+            if (!right.contains(cr)) {
+                cr = list.removeLast();
+                if (left.contains(cr)) {
+                    Character ls = left.pop();
+                    while (ls != null && ls != cr) {
+                        list.addFirst(ls);
+                        ls = left.isEmpty() ? null : left.pop();
+                    }
+                    found = true;
+                    break;
+                } else {
+                    right.push(cr);
+                }
+                touched = true;
+            }
+        }
+
+        return found ? findPair(list) + 2 : 1;
+    }
 }

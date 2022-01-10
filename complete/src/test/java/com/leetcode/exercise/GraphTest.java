@@ -5,6 +5,7 @@ import com.leetcode.exercise.datastructure.Vertex;
 import com.leetcode.exercise.utilities.JSONConverter;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,5 +58,13 @@ public class GraphTest {
     @Test
     public void testCountComponents() {
         assertEquals(2, graphOp.countComponents(4, JSONConverter.convertJSONtoInt2DArray("[[2,3],[1,2],[1,3]]")));
+    }
+
+    @Test
+    public void testLadderLetter() {
+        assertEquals(5, graphOp.ladderLength("hit", "cog", Arrays.asList("hot","dot","dog","lot","log","cog")));
+        assertEquals(0, graphOp.ladderLength("hit", "cog", Arrays.asList("hot","dot","dog","lot","log")));
+        assertEquals(2, graphOp.ladderLength("a", "c", Arrays.asList("a","b","c")));
+        assertEquals(3, graphOp.ladderLength("hot", "dog", Arrays.asList("hot","cog","dog","tot","hog","hop","pot","dot")));
     }
 }

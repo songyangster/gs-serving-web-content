@@ -1,5 +1,6 @@
 package com.leetcode.exercise;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,5 +25,19 @@ public class PalindromeTest {
         assertFalse(palindrome.isPalindrome(10));
         assertTrue(palindrome.isPalindrome(0));
         assertTrue(palindrome.isPalindrome(3));
+    }
+
+    @Disabled
+    @Test
+    public void findLongestPalindrome() {
+        assertEquals(0, palindrome.longestPalindromeSubseq(""));
+        assertEquals(1, palindrome.longestPalindromeSubseq("b"));
+        assertEquals(2, palindrome.longestPalindromeSubseq("bb"));
+        assertEquals(2, palindrome.longestPalindromeSubseq("bbc"));
+        assertEquals(4, palindrome.longestPalindromeSubseq("bbbcb"));
+        assertEquals(6, palindrome.longestPalindromeSubseq("cbbbabc"));
+        assertEquals(1, palindrome.longestPalindromeSubseq("abcdef"));
+        assertEquals(3, palindrome.longestPalindromeSubseq("abac"));
+        assertEquals(6, palindrome.longestPalindromeSubseq("abaabaa"));
     }
 }
