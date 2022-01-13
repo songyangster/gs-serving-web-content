@@ -1,8 +1,6 @@
 package com.leetcode.exercise;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class KSmallestPairs {
     public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
@@ -31,4 +29,45 @@ public class KSmallestPairs {
 
         return val;
     }
+
+    public int[][] kClosest(int[][] points, int k) {
+        TreeMap<Integer, Set<Point>> map = new TreeMap<>();
+
+        for (int[] point : points) {
+            int x = point[0];
+            int y = point[1];
+            int distance = x * x + y * y;
+            if (!map.containsKey(distance)) {
+                map.put(distance, new HashSet<>());
+            }
+            Set<Point> set = map.get(distance);
+            set.add(new Point(point));
+        }
+
+        int[][] val = new int[k][];
+        Iterator<Map.Entry<Integer, Set<Point>>> iterator = map.entrySet().iterator();
+        int i = 0;
+        while (i < k && iterator.hasNext()) {
+            Set<Point> set = iterator.next().getValue();
+            Iterator<Point> iterator1 = set.iterator();
+            while (i < k && iterator1.hasNext()) {
+                val[i] =  iterator1.next().getPoint();
+                i++;
+            }
+        }
+        return val;
+    }
+
+    private static class Point {
+        int[] point;
+
+        public Point(int[] point) {
+            this.point = point;
+        }
+
+        public int[] getPoint() {
+            return point;
+        }
+    }
+
 }

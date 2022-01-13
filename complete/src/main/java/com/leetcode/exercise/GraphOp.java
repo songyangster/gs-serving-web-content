@@ -1,6 +1,7 @@
 package com.leetcode.exercise;
 
 import com.leetcode.exercise.datastructure.Graph;
+import com.leetcode.exercise.datastructure.Point;
 import com.leetcode.exercise.datastructure.Vertex;
 
 import java.util.*;
@@ -139,4 +140,103 @@ public class GraphOp {
         }
         return c == 1;
     }
+
+    public int minKnightMoves(int x, int y) {
+        Point start = new Point(0, 0);
+        Point end = new Point(x, y);
+        return breadthFirstKnight(start, end);
+    }
+
+    private int breadthFirstKnight(Point start, Point end) {
+        Set<Point> visited = new LinkedHashSet<>();
+        Queue<Point> queue = new LinkedList<>();
+        queue.add(start);
+        visited.add(start);
+        int n = 0;
+        while (!queue.isEmpty()) {
+            n++;
+            int level_size = queue.size();
+            while (level_size-- > 0) {
+                Point vertex = queue.poll();
+                for (Point v : getAdjVertices(vertex)) {
+                    if (!visited.contains(v)) {
+                        visited.add(v);
+                        queue.add(v);
+                        if (v.equals(end)) return n + 1;
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+    Set<Point> getAdjVertices(Point p) {
+        Set<Point> adjSet = new HashSet<>();
+        int x = p.getX();
+        int y = p.getY();
+        adjSet.add(new Point(x - 2, y - 1));
+        adjSet.add(new Point(x - 2, y + 1));
+        adjSet.add(new Point(x + 2, y - 1));
+        adjSet.add(new Point(x + 2, y + 1));
+        adjSet.add(new Point(x - 1, y - 2));
+        adjSet.add(new Point(x - 1, y + 2));
+        adjSet.add(new Point(x + 1, y - 2));
+        adjSet.add(new Point(x + 1, y + 2));
+        return adjSet;
+    }
+
+    public int longestStrChain(String[] words) {
+        Map<String, Set<String>> map = new HashMap<>();
+        Set<String> noStart = new HashSet<>();
+        for (int i = 0; i < words.length; i++) {
+            for (int j = i + 1; j < words.length; j ++) {
+                int link = isLink(words[i], words[j]);
+                if (link != 0) {
+                    String wStart = link > 0 ? words[i] : words[j];
+                    String wEnd = link > 0 ? words[j] : words[i];
+                    if (!map.containsKey(wStart)) map.put(wStart, new HashSet<>());
+                    map.get(wStart).add(wEnd);
+                    noStart.add(wEnd);
+                }
+            }
+        }
+
+        Set<String> starts = new HashSet<>();
+        starts.addAll(map.keySet());
+        starts.removeAll(noStart);
+
+        return 0;
+    }
+
+    private int isLink(String w1, String w2) {
+        int val = 0;
+        if (Math.abs(w1.length() - w2.length()) != 1) {
+            return 0;
+        } else {
+            String wl, ws;
+            if (w1.length() > w2.length()) {
+                wl = w1;
+                ws = w2;
+                val = -1;
+            } else {
+                wl = w2;
+                ws = w1;
+                val = 1;
+            }
+            int mismatch = 0;
+            int i = 0, j = 0;
+            while (i < wl.length() && j < ws.length()) {
+                if (w1.charAt(i) != ws.charAt(j)) {
+                    mismatch++;
+                    if (mismatch > 1) return 0;
+                    i++;
+                } else {
+                    i++;
+                    j++;
+                }
+            }
+            return val;
+        }
+    }
+
 }

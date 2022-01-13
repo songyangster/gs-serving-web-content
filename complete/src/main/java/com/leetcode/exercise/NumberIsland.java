@@ -1,6 +1,7 @@
 package com.leetcode.exercise;
 
 import com.leetcode.exercise.datastructure.Graph;
+import com.leetcode.exercise.datastructure.Point;
 import com.leetcode.exercise.datastructure.Vertex;
 
 import java.util.*;
@@ -39,31 +40,4 @@ public class NumberIsland {
         return islands;
     }
 
-    public static class Point{
-        int x;
-        int y;
-
-        public Point(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Point point = (Point) o;
-            return x == point.x && y == point.y;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(x, y);
-        }
-
-        @Override
-        public String toString() {
-            return "(" + x + ", " + y + ")";
-        }
-    }
 }
