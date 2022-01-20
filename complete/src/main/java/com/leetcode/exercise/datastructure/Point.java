@@ -7,10 +7,17 @@ import java.util.Objects;
 public class Point {
     int x;
     int y;
+    Integer value = null;
 
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Point(int x, int y, Integer value) {
+        this.x = x;
+        this.y = y;
+        this.value = value;
     }
 
     public int getX() {
@@ -19,6 +26,10 @@ public class Point {
 
     public int getY() {
         return y;
+    }
+
+    public Integer getValue() {
+        return value;
     }
 
     @Override
@@ -36,6 +47,6 @@ public class Point {
 
     @Override
     public String toString() {
-        return "(" + x + ", " + y + ")";
+        return "(" + x + ", " + y + ")" + (value != null ? " = " + value : "");
     }
 }

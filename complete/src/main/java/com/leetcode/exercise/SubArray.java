@@ -183,4 +183,30 @@ public class SubArray {
         out.deleteCharAt(b.length() -1);
         return out.toString();
     }
+
+    public int findLeastNumOfUniqueInts(int[] arr, int k) {
+        if (k >= arr.length) return 0;
+
+        Map<Integer, Integer> cMap = new HashMap<>();
+
+        for (int i: arr) {
+            if (!cMap.containsKey(i)) cMap.put(i, 0);
+            cMap.put(i, cMap.containsKey(i) ? cMap.get(i) + 1 : 1);
+        }
+
+        int[] counts = new int[cMap.size()];
+        int i = 0;
+        for (Map.Entry<Integer, Integer> entry : cMap.entrySet()) {
+            counts[i++] = entry.getValue();
+        }
+
+        Arrays.sort(counts);
+
+        i = 0;
+        while (k > 0 && i < counts.length) {
+            k -= counts[i];
+            if (k >= 0) i++;
+        }
+        return counts.length - i;
+    }
 }

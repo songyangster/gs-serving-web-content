@@ -73,4 +73,15 @@ public class JSONConverter {
         return null;
     }
 
+    public static JSONArray convert2DIntArrayToJSON(int[][] array) {
+        JSONArray jsonArray = new JSONArray();
+        for (int[] ca : array) {
+            JSONArray arr = new JSONArray();
+            for (int c : ca) {
+                arr.put(c); // or some other conversion
+            }
+            jsonArray.put(arr);
+        }
+        return jsonArray;
+    }
 }
