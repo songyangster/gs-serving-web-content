@@ -35,4 +35,30 @@ public class BalanceParentheses {
         if (!stack.isEmpty()) count += stack.size() * 2;
         return count;
     }
+
+    public int minSwapBeforeBalance(String input, int i, int j) {
+        if (input == null || input.isEmpty()) return 0;
+
+        int bCount = 0;
+        int eCount = 0;
+        while (i < j) {
+            char cB = input.charAt(i);
+            char cE = input.charAt(j - 1);
+            i++;
+            j--;
+            // step1: find a new begin position that has to be swapped
+            if (!(cB == '[' && cE == ']')) {
+                // step2: find a new j position that has to be swapped
+                // step3: swap i and j chars
+                bCount = cB == '[' ? bCount + 1 : bCount - 1;
+                eCount = cE == ']' ? eCount + 1 : eCount - 1;
+
+                if (bCount == eCount) {
+                    return Math.abs(bCount) + minSwapBeforeBalance(input, i, j);
+                }
+            }
+        }
+
+        return 0;
+    }
 }

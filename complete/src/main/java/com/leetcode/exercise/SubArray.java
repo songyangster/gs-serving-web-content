@@ -209,4 +209,40 @@ public class SubArray {
         }
         return counts.length - i;
     }
+
+    public int lengthOfLongestSubstring(String s) {
+        Set<Character> cSet = new HashSet<>();
+        Queue<Character> cQueue = new LinkedList<>();
+        int max = 0;
+
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (cSet.contains(c)) {
+                char pulled = cQueue.remove();
+                while( pulled != c){
+                    cSet.remove(pulled);
+                    pulled = cQueue.remove();
+                }
+            }
+            cSet.add(c);
+            cQueue.add(c);
+            if (cQueue.size() > max) max = cQueue.size();
+        }
+        return max;
+    }
+
+    public int subarraySum(int[] nums, int k) {
+        int count = 0;
+        int sum = 0;
+        int i = 0; int j = 0;
+        while(j <= nums.length) {
+            if (sum >= k) {
+                if (sum == k) count++;
+                sum -= nums[i++];
+            } else {
+                sum += nums[j++];
+            }
+        }
+        return count;
+    }
 }
